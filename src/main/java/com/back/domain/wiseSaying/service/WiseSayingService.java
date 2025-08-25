@@ -13,7 +13,6 @@ import java.util.Optional;
 public class WiseSayingService {
     private final WiseSayingRepository wiseSayingRepository;
 
-
     public WiseSaying write(String content, String author) {
         WiseSaying wiseSaying = new WiseSaying(content, author);
         wiseSayingRepository.save(wiseSaying);
