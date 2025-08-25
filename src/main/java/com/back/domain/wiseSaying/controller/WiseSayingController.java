@@ -2,6 +2,7 @@ package com.back.domain.wiseSaying.controller;
 
 import com.back.domain.wiseSaying.entity.WiseSaying;
 import com.back.domain.wiseSaying.service.WiseSayingService;
+import com.back.standard.util.service.MarkDownService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class WiseSayingController {
 
     private final WiseSayingService wiserSayingService ;
+    private final MarkDownService markDownService;
 
     @GetMapping("/wiseSayings/write")
     @ResponseBody
@@ -54,11 +56,14 @@ public class WiseSayingController {
         WiseSaying wiseSaying = wiserSayingService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("%d번 명언은 존재하지 않습니다.".formatted(id)));
 
+        // Node를 HTML 문자열로 렌더링
+        String html = markDownService.toHtml(wiseSaying.getContent());
+
         return """
                 <h1>번호 : %d</h1>
-                <div>명언 : %s</div>
                 <div>작가 : %s</div>
-                """.formatted(wiseSaying.getId(), wiseSaying.getContent(), wiseSaying.getAuthor());
+                <div>%s</div>
+                """.formatted(wiseSaying.getId(), wiseSaying.getAuthor(), html);
     }
 
 

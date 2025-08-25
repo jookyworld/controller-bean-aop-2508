@@ -1,7 +1,7 @@
 package com.back.domain.member.member.service;
 
 
-import com.back.domain.global.jpa.entity.Member;
+import com.back.global.jpa.entity.Member;
 import com.back.domain.member.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
